@@ -1,0 +1,509 @@
+:root {
+  --fc-bg: rgba(255, 255, 255, 0.95);
+  --fc-bg-hover: rgba(255, 255, 255, 0.98);
+  --fc-border: rgba(0, 0, 0, 0.1);
+  --fc-text: #1a1a1a;
+  --fc-text-secondary: #666;
+  --fc-accent: #3b82f6;
+  --fc-accent-hover: #2563eb;
+  --fc-input-bg: rgba(0, 0, 0, 0.03);
+  --fc-input-border: rgba(0, 0, 0, 0.1);
+  --fc-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --fc-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fc-bg: rgba(30, 30, 30, 0.95);
+    --fc-bg-hover: rgba(40, 40, 40, 0.98);
+    --fc-border: rgba(255, 255, 255, 0.1);
+    --fc-text: #e5e5e5;
+    --fc-text-secondary: #a0a0a0;
+    --fc-accent: #60a5fa;
+    --fc-accent-hover: #3b82f6;
+    --fc-input-bg: rgba(255, 255, 255, 0.05);
+    --fc-input-border: rgba(255, 255, 255, 0.1);
+    --fc-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --fc-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin : 0;
+  padding: 0;
+}
+
+.font-controls-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  background: var(--fc-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--fc-border);
+  border-radius: 12px;
+  box-shadow: var(--fc-shadow);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", sans-serif;
+  font-size: 14px;
+  color: var(--fc-text);
+  z-index: 9999;
+  user-select: none;
+}
+
+.font-controls-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--fc-border);
+  cursor: grab;
+  transition: background 0.2s ease;
+}
+
+.font-controls-header:active {
+  cursor: grabbing;
+}
+
+.font-controls-header:hover {
+  background: var(--fc-input-bg);
+}
+
+.font-controls-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.font-controls-toggle {
+  background: none;
+  border: none;
+  color: var(--fc-text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.font-controls-toggle:hover {
+  background: var(--fc-input-bg);
+  color: var(--fc-text);
+}
+
+.font-controls-toggle svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.font-controls-toggle.collapsed svg {
+  transform: rotate(-90deg);
+}
+
+.font-controls-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.font-controls-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.font-controls-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.font-controls-content::-webkit-scrollbar-thumb {
+  background: var(--fc-border);
+  border-radius: 3px;
+}
+
+.font-controls-content::-webkit-scrollbar-thumb:hover {
+  background: var(--fc-text-secondary);
+}
+
+.font-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.font-control-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--fc-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.font-control-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--fc-input-bg);
+  border: 1px solid var(--fc-input-border);
+  border-radius: 6px;
+  color: var(--fc-text);
+  font-size: 14px;
+  transition: all 0.2s ease;
+  outline: none;
+  font-family: inherit;
+}
+
+.font-control-input:hover {
+  background: var(--fc-bg-hover);
+  border-color: var(--fc-accent);
+}
+
+.font-control-input:focus {
+  border-color: var(--fc-accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.font-control-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.font-control-slider-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.font-control-slider {
+  flex: 1;
+  height: 6px;
+  background: var(--fc-input-bg);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.font-control-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--fc-accent);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.font-control-slider::-webkit-slider-thumb:hover {
+  background: var(--fc-accent-hover);
+  transform: scale(1.1);
+}
+
+.font-control-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--fc-accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.font-control-slider::-moz-range-thumb:hover {
+  background: var(--fc-accent-hover);
+  transform: scale(1.1);
+}
+
+.font-control-number {
+  width: 70px;
+  text-align: center;
+  padding: 6px 8px;
+}
+
+.font-control-color-input {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.font-control-color-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--fc-input-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.font-control-color-preview:hover {
+  transform: scale(1.05);
+  border-color: var(--fc-accent);
+}
+
+.font-control-color-preview input[type="color"] {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  border: none;
+  cursor: pointer;
+}
+
+.font-control-text-input {
+  flex: 1;
+}
+
+.font-control-button-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.font-control-button {
+  padding: 8px;
+  background: var(--fc-input-bg);
+  border: 1px solid var(--fc-input-border);
+  border-radius: 6px;
+  color: var(--fc-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.font-control-button:hover {
+  background: var(--fc-bg-hover);
+  border-color: var(--fc-accent);
+}
+
+.font-control-button.active {
+  background: var(--fc-accent);
+  border-color: var(--fc-accent);
+  color: white;
+}
+
+.font-control-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Reset Button */
+.font-control-reset-button {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--fc-input-bg);
+  border: 1px solid var(--fc-input-border);
+  border-radius: 6px;
+  color: var(--fc-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  margin-top: 8px;
+}
+
+.font-control-reset-button:hover {
+  background: var(--fc-accent);
+  border-color: var(--fc-accent);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.font-control-reset-button:active {
+  transform: translateY(0);
+}
+
+.font-control-reset-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Export Section */
+.font-control-export-section {
+  margin-top: 16px;
+  border-top: 1px solid var(--fc-border);
+  padding-top: 16px;
+}
+
+.font-control-export-toggle {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--fc-input-bg);
+  border: 1px solid var(--fc-input-border);
+  border-radius: 6px;
+  color: var(--fc-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.font-control-export-toggle:hover {
+  background: var(--fc-bg-hover);
+  border-color: var(--fc-accent);
+}
+
+.font-control-export-toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+}
+
+.font-control-export-toggle svg.rotated {
+  transform: rotate(90deg);
+}
+
+.font-control-export-content {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Code Block */
+.font-control-code-block {
+  background: var(--fc-input-bg);
+  border: 1px solid var(--fc-input-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.font-control-code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid var(--fc-border);
+}
+
+@media (prefers-color-scheme: dark) {
+  .font-control-code-header {
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+.font-control-code-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fc-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.font-control-copy-button {
+  background: transparent;
+  border: none;
+  color: var(--fc-text-secondary);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.font-control-copy-button:hover {
+  background: var(--fc-input-bg);
+  color: var(--fc-accent);
+}
+
+.font-control-copy-button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.font-control-code-content {
+  margin: 0;
+  padding: 12px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--fc-text);
+}
+
+.font-control-code-content::-webkit-scrollbar {
+  height: 6px;
+}
+
+.font-control-code-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.font-control-code-content::-webkit-scrollbar-thumb {
+  background: var(--fc-border);
+  border-radius: 3px;
+}
+
+.font-control-code-content code {
+  font-family: inherit;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 600px;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    max-height: 600px;
+  }
+  to {
+    opacity: 0;
+    max-height: 0;
+  }
+}
+
+.font-controls-content.entering {
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.font-controls-content.exiting {
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
