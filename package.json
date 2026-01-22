@@ -1,6 +1,6 @@
 {
   "name": "font-controls",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "A beautiful, Leva-inspired font controls library for React",
   "type": "module",
   "main": "./dist/font-controls.umd.cjs",
