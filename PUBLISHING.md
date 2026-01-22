@@ -20,7 +20,7 @@ Update the following fields in `package.json`:
   "author": "Your Name <your.email@example.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/font-controls"
+    "url": "https://github.com/alvinsugijanto/font-controls"
   }
 }
 ```
@@ -89,7 +89,7 @@ git init
 git add .
 git commit -m "Initial commit: font-controls library v1.0.0"
 git branch -M main
-git remote add origin https://github.com/yourusername/font-controls.git
+git remote add origin https://github.com/alvinsugijanto/font-controls.git
 git push -u origin main
 ```
 
