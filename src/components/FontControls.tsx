@@ -16,6 +16,11 @@ import {
   generateReactStyles,
   generateCSSClass,
 } from "../utils/codeGenerators";
+import {
+  loadFontConfig,
+  saveFontConfig,
+  clearFontConfig,
+} from "../utils/localStorage";
 import "./styles/styles.css";
 
 const DEFAULT_FONT_FAMILIES = [
@@ -75,10 +80,18 @@ export const FontControls: React.FC<FontControlsProps> = ({
   collapsed = false,
   draggable = true,
   position,
+  enableLocalStorage = false,
+  storageKey = "font-controls-config",
 }) => {
-  const [config, setConfig] = useState<FontConfig>({
-    ...DEFAULT_CONFIG,
-    ...value,
+  const [config, setConfig] = useState<FontConfig>(() => {
+    // Load from localStorage if enabled
+    if (enableLocalStorage) {
+      const savedConfig = loadFontConfig(storageKey);
+      if (savedConfig) {
+        return { ...DEFAULT_CONFIG, ...value, ...savedConfig };
+      }
+    }
+    return { ...DEFAULT_CONFIG, ...value };
   });
   const [showExport, setShowExport] = useState(false);
 
@@ -101,11 +114,21 @@ export const FontControls: React.FC<FontControlsProps> = ({
     const newConfig = { ...config, [key]: newValue };
     setConfig(newConfig);
     onChange?.(newConfig);
+
+    // Save to localStorage if enabled
+    if (enableLocalStorage) {
+      saveFontConfig(newConfig, storageKey);
+    }
   };
 
   const handleReset = () => {
     setConfig(DEFAULT_CONFIG);
     onChange?.(DEFAULT_CONFIG);
+
+    // Clear from localStorage if enabled
+    if (enableLocalStorage) {
+      clearFontConfig(storageKey);
+    }
   };
 
   return (

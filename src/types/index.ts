@@ -66,6 +66,18 @@ export interface FontControlsProps {
    * Initial position (for draggable mode)
    */
   position?: { x: number; y: number };
+
+  /**
+   * Enable local storage persistence
+   * @default false
+   */
+  enableLocalStorage?: boolean;
+
+  /**
+   * Custom storage key for local storage
+   * @default 'font-controls-config'
+   */
+  storageKey?: string;
 }
 
 export type ControlChangeHandler<T> = (value: T) => void;

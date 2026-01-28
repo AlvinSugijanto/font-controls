@@ -2,7 +2,10 @@ import { useState } from "react";
 import { FontControls, FontConfig, useFontControls } from "../src";
 
 function App() {
-  const { config, setConfig, updateConfig, resetConfig } = useFontControls();
+  const { config, setConfig, updateConfig, resetConfig } = useFontControls({
+    enableLocalStorage: true,
+    storageKey: "font-controls-demo",
+  });
   return (
     <div
       style={{
@@ -119,6 +122,8 @@ function App() {
         title="Font Controls"
         draggable={true}
         position={{ x: 20, y: 20 }}
+        enableLocalStorage={true}
+        storageKey="font-controls-demo"
       />
     </div>
   );
