@@ -16,11 +16,6 @@ import {
   generateReactStyles,
   generateCSSClass,
 } from "../utils/codeGenerators";
-import {
-  loadFontConfig,
-  saveFontConfig,
-  clearFontConfig,
-} from "../utils/localStorage";
 import "./styles/styles.css";
 
 const DEFAULT_FONT_FAMILIES = [
@@ -153,21 +148,8 @@ export const FontControls: React.FC<FontControlsProps> = ({
   minFontSize = 8,
   maxFontSize = 120,
   fontSizeStep = 1,
-  title = "Font Controls",
-  collapsed = false,
-  draggable = true,
-  position,
-  enableLocalStorage = false,
-  storageKey = "font-controls-config",
 }) => {
   const [config, setConfig] = useState<FontConfig>(() => {
-    // Load from localStorage if enabled
-    if (enableLocalStorage) {
-      const savedConfig = loadFontConfig(storageKey);
-      if (savedConfig) {
-        return { ...DEFAULT_CONFIG, ...value, ...savedConfig };
-      }
-    }
     return { ...DEFAULT_CONFIG, ...value };
   });
   const [showExport, setShowExport] = useState(false);
@@ -191,30 +173,15 @@ export const FontControls: React.FC<FontControlsProps> = ({
     const newConfig = { ...config, [key]: newValue };
     setConfig(newConfig);
     onChange?.(newConfig);
-
-    // Save to localStorage if enabled
-    if (enableLocalStorage) {
-      saveFontConfig(newConfig, storageKey);
-    }
   };
 
   const handleReset = () => {
     setConfig(DEFAULT_CONFIG);
     onChange?.(DEFAULT_CONFIG);
-
-    // Clear from localStorage if enabled
-    if (enableLocalStorage) {
-      clearFontConfig(storageKey);
-    }
   };
 
   return (
-    <Panel
-      title={title}
-      collapsed={collapsed}
-      draggable={draggable}
-      position={position}
-    >
+    <Panel title="Font Controls" draggable={true} position={{ x: 20, y: 20 }}>
       <SearchableFontSelect
         value={config.fontFamily}
         onChange={(value) => updateConfig("fontFamily", value)}
