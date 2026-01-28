@@ -2,36 +2,30 @@ import { useState } from "react";
 import { FontControls, FontConfig, useFontControls } from "../src";
 
 function App() {
-  const { config, setConfig, updateConfig, resetConfig } = useFontControls({
-    enableLocalStorage: true,
-    storageKey: "font-controls-demo",
-  });
+  const { config, setConfig, updateConfig, resetConfig } = useFontControls();
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        padding: "40px 20px",
+        background: "hsl(0, 0%, 100%)",
+        padding: "40px",
       }}
     >
       <div
         style={{
-          background: "white",
-          borderRadius: "16px",
-          boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
+          background: "hsl(0, 0%, 100%)",
+          borderRadius: "8px",
           overflow: "hidden",
           maxWidth: "1200px",
           margin: "0 auto",
         }}
       >
-        <div style={{ padding: "40px" }}>
+        <div>
           <h1
             style={{
               fontSize: "48px",
               fontWeight: 700,
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "hsl(0, 0%, 3.9%)",
               marginBottom: "20px",
             }}
           >
@@ -40,7 +34,7 @@ function App() {
           <p
             style={{
               fontSize: "18px",
-              color: "#666",
+              color: "hsl(0, 0%, 45.1%)",
               marginBottom: "40px",
             }}
           >
@@ -51,12 +45,12 @@ function App() {
 
         <div
           style={{
-            background: "#f8f9fa",
+            background: "hsl(0, 0%, 98%)",
             padding: "40px",
-            borderTop: "1px solid #e0e0e0",
+            border: "1px solid hsl(0, 0%, 89.8%)",
           }}
         >
-          <div style={config}>
+          <div style={{ ...config, color: config.color || "hsl(0, 0%, 3.9%)" }}>
             <h2
               style={{
                 marginBottom: "20px",
@@ -86,9 +80,11 @@ function App() {
         <div
           style={{
             padding: "40px",
-            background: "#1a1a1a",
-            color: "#e0e0e0",
-            borderTop: "1px solid #333",
+            background: "hsl(0, 0%, 96.1%)",
+            color: "hsl(0, 0%, 3.9%)",
+            borderBottom: "1px solid hsl(0, 0%, 89.8%)",
+            borderLeft: "1px solid hsl(0, 0%, 89.8%)",
+            borderRight: "1px solid hsl(0, 0%, 89.8%)",
           }}
         >
           <h3
@@ -96,16 +92,17 @@ function App() {
               fontSize: "16px",
               fontWeight: 600,
               marginBottom: "16px",
-              color: "#fff",
+              color: "hsl(0, 0%, 3.9%)",
             }}
           >
             Current Configuration
           </h3>
           <pre
             style={{
-              background: "#2a2a2a",
+              background: "hsl(0, 0%, 100%)",
               padding: "20px",
-              borderRadius: "8px",
+              borderRadius: "6px",
+              border: "1px solid hsl(0, 0%, 89.8%)",
               overflow: "auto",
               fontSize: "14px",
               lineHeight: 1.6,
@@ -116,15 +113,7 @@ function App() {
         </div>
       </div>
 
-      <FontControls
-        value={config}
-        onChange={setConfig}
-        title="Font Controls"
-        draggable={true}
-        position={{ x: 20, y: 20 }}
-        enableLocalStorage={true}
-        storageKey="font-controls-demo"
-      />
+      <FontControls value={config} onChange={setConfig} />
     </div>
   );
 }

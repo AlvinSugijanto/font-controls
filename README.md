@@ -6,14 +6,14 @@ A beautiful, Leva-inspired font controls library for React. Provides an intuitiv
 
 ## Features
 
-✨ **Beautiful UI** - Glassmorphism design with smooth animations  
-🎨 **Dark Mode** - Automatic dark mode support  
-🖱️ **Draggable** - Drag to reposition the control panel  
-🔄 **Reset Button** - Quickly reset all values to defaults  
-📦 **Lightweight** - Minimal dependencies  
-🔧 **TypeScript** - Full TypeScript support with type definitions  
-⚡ **Real-time Preview** - See changes instantly  
-🎯 **Customizable** - Configure fonts, ranges, and more
+**- 100 Google Fonts**  
+**- Draggable Panel**  
+**- CSS Isolated**  
+**- Copy Paste Your Text Instantly**
+
+## Screenshot
+
+![Font Controls Demo](./screenshot.png)
 
 ## Installation
 
@@ -21,80 +21,112 @@ A beautiful, Leva-inspired font controls library for React. Provides an intuitiv
 npm install font-controls
 ```
 
-or
-
-```bash
-yarn add font-controls
-```
-
-or
-
-```bash
-pnpm add font-controls
-```
-
 ## Quick Start
 
 ```tsx
-import { FontControls } from "font-controls";
+import { FontControls, useFontControls } from "font-controls";
 import "font-controls/dist/style.css";
-import { useState } from "react";
 
 function App() {
-  const [fontConfig, setFontConfig] = useState({
-    fontFamily: "Arial",
-    fontSize: 16,
-    fontWeight: 400,
-    lineHeight: 1.5,
-    letterSpacing: 0,
-    textTransform: "none",
-    color: "#000000",
-    textAlign: "left",
-  });
+  const { config, setConfig } = useFontControls();
 
   return (
     <div>
-      <h1
-        style={{
-          fontFamily: fontConfig.fontFamily,
-          fontSize: `${fontConfig.fontSize}px`,
-          fontWeight: fontConfig.fontWeight,
-          lineHeight: fontConfig.lineHeight,
-          letterSpacing: `${fontConfig.letterSpacing}px`,
-          textTransform: fontConfig.textTransform,
-          color: fontConfig.color,
-          textAlign: fontConfig.textAlign,
-        }}
-      >
-        Hello, World!
-      </h1>
+      <div style={config}>
+        <h1>Your styled text here</h1>
+        <p>Typography controls made easy!</p>
+      </div>
 
-      <FontControls value={fontConfig} onChange={setFontConfig} />
+      <FontControls value={config} onChange={setConfig} />
     </div>
   );
 }
 ```
 
-**That's it!** Google Fonts are loaded automatically - no need to add `<link>` tags to your HTML.
+**That's it!** Google Fonts are loaded automatically.
+
+## Complete Example
+
+Here's a full example with live preview:
+
+```tsx
+import { FontControls, useFontControls } from "font-controls";
+import "font-controls/dist/style.css";
+
+function App() {
+  const { config, setConfig } = useFontControls();
+
+  return (
+    <div style={{ minHeight: "100vh", padding: "40px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <h1>Font Controls Demo</h1>
+
+        {/* Preview area with live font changes */}
+        <div
+          style={{
+            ...config,
+            padding: "40px",
+            border: "1px solid #eee",
+            borderRadius: "8px",
+          }}
+        >
+          <h2>The Quick Brown Fox Jumps Over The Lazy Dog</h2>
+          <p>
+            Typography is the art and technique of arranging type to make
+            written language legible, readable and appealing when displayed.
+          </p>
+        </div>
+
+        {/* Current config display */}
+        <pre
+          style={{
+            background: "#f5f5f5",
+            padding: "20px",
+            borderRadius: "6px",
+            marginTop: "20px",
+          }}
+        >
+          {JSON.stringify(config, null, 2)}
+        </pre>
+      </div>
+
+      {/* Font Controls Panel */}
+      <FontControls value={config} onChange={setConfig} />
+    </div>
+  );
+}
+```
 
 ## API Reference
 
-### FontControls Props
+### `useFontControls` Hook
 
-| Prop           | Type                           | Default                       | Description                                   |
-| -------------- | ------------------------------ | ----------------------------- | --------------------------------------------- |
-| `value`        | `Partial<FontConfig>`          | -                             | Initial font configuration                    |
-| `onChange`     | `(config: FontConfig) => void` | -                             | Callback fired when any font property changes |
-| `fontFamilies` | `string[]`                     | `['Arial', 'Helvetica', ...]` | Custom list of font families                  |
-| `minFontSize`  | `number`                       | `8`                           | Minimum font size                             |
-| `maxFontSize`  | `number`                       | `120`                         | Maximum font size                             |
-| `fontSizeStep` | `number`                       | `1`                           | Font size step increment                      |
-| `title`        | `string`                       | `'Font Controls'`             | Panel title                                   |
-| `collapsed`    | `boolean`                      | `false`                       | Initial collapsed state                       |
-| `draggable`    | `boolean`                      | `true`                        | Enable drag to reposition                     |
-| `position`     | `{ x: number; y: number }`     | `{ x: 20, y: 20 }`            | Initial position                              |
+The easiest way to use font controls:
 
-### FontConfig Type
+```tsx
+const { config, setConfig, updateConfig, resetConfig } =
+  useFontControls(initialConfig);
+```
+
+**Returns:**
+
+- `config` - Current font configuration object
+- `setConfig` - Set entire config at once
+- `updateConfig` - Update a single property
+- `resetConfig` - Reset to defaults
+
+### `<FontControls>` Component
+
+| Prop           | Type                           | Default                    | Description                     |
+| -------------- | ------------------------------ | -------------------------- | ------------------------------- |
+| `value`        | `Partial<FontConfig>`          | -                          | Current font configuration      |
+| `onChange`     | `(config: FontConfig) => void` | -                          | Called when config changes      |
+| `fontFamilies` | `string[]`                     | `['Inter', 'Roboto', ...]` | Custom font list (100 defaults) |
+| `minFontSize`  | `number`                       | `8`                        | Minimum font size               |
+| `maxFontSize`  | `number`                       | `120`                      | Maximum font size               |
+| `fontSizeStep` | `number`                       | `1`                        | Font size increment             |
+
+### `FontConfig` Type
 
 ```typescript
 interface FontConfig {
@@ -111,120 +143,59 @@ interface FontConfig {
 
 ## Advanced Usage
 
-### Using the Hook
-
-For more control, you can use the `useFontControls` hook:
-
-```tsx
-import { useFontControls } from "font-controls";
-
-function App() {
-  const { config, setConfig, updateConfig, resetConfig } = useFontControls({
-    fontFamily: "Georgia",
-    fontSize: 24,
-  });
-
-  return (
-    <div>
-      <p style={{ ...config }}>Styled text</p>
-      <button onClick={resetConfig}>Reset</button>
-    </div>
-  );
-}
-```
-
 ### Custom Font List
 
 ```tsx
 <FontControls
-  fontFamilies={["Inter", "Roboto", "Open Sans", "Lato", "Montserrat"]}
-  onChange={setFontConfig}
-/>
-```
-
-### Custom Position
-
-```tsx
-<FontControls
-  position={{ x: 100, y: 100 }}
-  draggable={true}
-  onChange={setFontConfig}
-/>
-```
-
-### Controlled Component
-
-```tsx
-const [config, setConfig] = useState<FontConfig>({
-  fontFamily: "Arial",
-  fontSize: 16,
-  // ... other properties
-});
-
-<FontControls
   value={config}
-  onChange={(newConfig) => {
-    console.log("Font changed:", newConfig);
-    setConfig(newConfig);
-  }}
-/>;
+  onChange={setConfig}
+  fontFamilies={["Inter", "Roboto", "Playfair Display", "Fira Code"]}
+/>
+```
+
+### Without the Hook
+
+```tsx
+import { useState } from "react";
+import { FontControls } from "font-controls";
+
+function App() {
+  const [config, setConfig] = useState({});
+
+  return <FontControls value={config} onChange={setConfig} />;
+}
+```
+
+### Update Single Property
+
+```tsx
+const { config, updateConfig } = useFontControls();
+
+// Update just the font size
+updateConfig("fontSize", 24);
+
+// Update just the color
+updateConfig("color", "#ff0000");
 ```
 
 ## Styling
 
-The library uses CSS variables for theming. You can customize the appearance:
+The library uses CSS variables for theming:
 
 ```css
 :root {
-  --fc-bg: rgba(255, 255, 255, 0.95);
-  --fc-accent: #3b82f6;
-  --fc-text: #1a1a1a;
-  /* ... other variables */
+  --fc-bg: hsl(0, 0%, 100%); /* Panel background */
+  --fc-text: hsl(0, 0%, 3.9%); /* Text color */
+  --fc-border: hsl(0, 0%, 89.8%); /* Border color */
+  --fc-accent: hsl(0, 0%, 9%); /* Accent color */
 }
 ```
 
-## Examples
+### CSS Isolation
 
-### Basic Example
-
-```tsx
-import { FontControls } from "font-controls";
-import "font-controls/dist/style.css";
-
-function BasicExample() {
-  const [config, setConfig] = useState({});
-
-  return <FontControls onChange={setConfig} />;
-}
-```
-
-### With Live Preview
-
-```tsx
-function LivePreview() {
-  const [config, setConfig] = useState({
-    fontFamily: "Georgia",
-    fontSize: 32,
-    color: "#333",
-  });
-
-  return (
-    <div>
-      <div
-        style={{
-          fontFamily: config.fontFamily,
-          fontSize: `${config.fontSize}px`,
-          color: config.color,
-        }}
-      >
-        Live preview text
-      </div>
-
-      <FontControls value={config} onChange={setConfig} />
-    </div>
-  );
-}
-```
+✅ **No conflicts** - All styles are scoped to `.font-controls-panel`  
+✅ **Safe to use** - Won't affect your existing CSS  
+✅ **No global resets** - Your layout stays intact
 
 ## Browser Support
 
@@ -233,30 +204,10 @@ function LivePreview() {
 - Safari (latest)
 - Edge (latest)
 
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Run demo
-npm run dev
-
-# Build library
-npm run build
-
-# Preview build
-npm run preview
-```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
 ## License
 
-MIT © [Your Name]
+MIT
 
 ## Credits
 
-Inspired by [Leva](https://github.com/pmndrs/leva) - A GUI controls library for React.
+Inspired by [Leva](https://github.com/pmndrs/leva)

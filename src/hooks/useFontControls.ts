@@ -42,7 +42,7 @@ export interface UseFontControlsOptions {
 export const useFontControls = (options?: UseFontControlsOptions) => {
   const {
     initialConfig,
-    enableLocalStorage = false,
+    enableLocalStorage = true,
     storageKey = "font-controls-config",
   } = options || {};
 
