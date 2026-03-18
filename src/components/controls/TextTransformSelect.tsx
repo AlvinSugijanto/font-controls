@@ -2,13 +2,14 @@ import React from "react";
 import { ControlChangeHandler } from "../../types";
 
 interface TextTransformSelectProps {
-  value: "none" | "uppercase" | "lowercase" | "capitalize";
+  value: "none" | "uppercase" | "lowercase" | "capitalize" | "inherit";
   onChange: ControlChangeHandler<
-    "none" | "uppercase" | "lowercase" | "capitalize"
+    "none" | "uppercase" | "lowercase" | "capitalize" | "inherit"
   >;
 }
 
 const TEXT_TRANSFORMS = [
+  { value: "inherit" as const, label: "Inherit" },
   { value: "none" as const, label: "None" },
   { value: "uppercase" as const, label: "UPPERCASE" },
   { value: "lowercase" as const, label: "lowercase" },

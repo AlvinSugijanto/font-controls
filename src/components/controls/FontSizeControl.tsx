@@ -2,8 +2,8 @@ import React from "react";
 import { ControlChangeHandler } from "../../types";
 
 interface FontSizeControlProps {
-  value: number;
-  onChange: ControlChangeHandler<number>;
+  value: number | "inherit";
+  onChange: ControlChangeHandler<number | "inherit">;
   min: number;
   max: number;
   step: number;
@@ -16,6 +16,8 @@ export const FontSizeControl: React.FC<FontSizeControlProps> = ({
   max,
   step,
 }) => {
+  const numericValue = value === "inherit" ? 16 : value;
+
   return (
     <div className="font-control-group">
       <label className="font-control-label">Font Size</label>
@@ -26,17 +28,18 @@ export const FontSizeControl: React.FC<FontSizeControlProps> = ({
           min={min}
           max={max}
           step={step}
-          value={value}
+          value={numericValue}
           onChange={(e) => onChange(Number(e.target.value))}
         />
         <input
-          type="number"
+          type="text"
           className="font-control-input font-control-number"
-          min={min}
-          max={max}
-          step={step}
           value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (val === "inherit") onChange("inherit");
+            else onChange(Number(val));
+          }}
         />
       </div>
     </div>

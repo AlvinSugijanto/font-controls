@@ -25,7 +25,7 @@ npm install font-controls
 
 ```tsx
 import { FontControls, useFontControls } from "font-controls";
-import "font-controls/dist/style.css";
+import "font-controls/style.css";
 
 function App() {
   const { config, setConfig } = useFontControls();

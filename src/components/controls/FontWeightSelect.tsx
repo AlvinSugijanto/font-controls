@@ -2,11 +2,12 @@ import React from "react";
 import { ControlChangeHandler } from "../../types";
 
 interface FontWeightSelectProps {
-  value: number;
-  onChange: ControlChangeHandler<number>;
+  value: number | "inherit";
+  onChange: ControlChangeHandler<number | "inherit">;
 }
 
 const FONT_WEIGHTS = [
+  { value: "inherit", label: "Inherit" },
   { value: 100, label: "Thin" },
   { value: 200, label: "Extra Light" },
   { value: 300, label: "Light" },
@@ -28,11 +29,14 @@ export const FontWeightSelect: React.FC<FontWeightSelectProps> = ({
       <select
         className="font-control-input font-control-select"
         value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={(e) => {
+          const val = e.target.value;
+          onChange(val === "inherit" ? "inherit" : Number(val));
+        }}
       >
         {FONT_WEIGHTS.map((weight) => (
           <option key={weight.value} value={weight.value}>
-            {weight.label} ({weight.value})
+            {weight.label} {weight.value !== "inherit" ? `(${weight.value})` : ""}
           </option>
         ))}
       </select>

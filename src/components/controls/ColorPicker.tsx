@@ -10,6 +10,10 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   value,
   onChange,
 }) => {
+  // input[type="color"] requires a valid 6-character hex code
+  const isValidHex = /^#[0-9A-F]{6}$/i.test(value);
+  const colorValue = isValidHex ? value : "#000000";
+
   return (
     <div className="font-control-group">
       <label className="font-control-label">Text Color</label>
@@ -17,7 +21,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         <div className="font-control-color-preview">
           <input
             type="color"
-            value={value}
+            value={colorValue}
             onChange={(e) => onChange(e.target.value)}
           />
         </div>

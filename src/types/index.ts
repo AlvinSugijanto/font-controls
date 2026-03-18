@@ -1,12 +1,12 @@
 export interface FontConfig {
   fontFamily: string;
-  fontSize: number;
-  fontWeight: number;
-  lineHeight: number;
-  letterSpacing: number;
-  textTransform: "none" | "uppercase" | "lowercase" | "capitalize";
+  fontSize: number | "inherit";
+  fontWeight: number | "inherit";
+  lineHeight: number | "inherit";
+  letterSpacing: number | "inherit";
+  textTransform: "none" | "uppercase" | "lowercase" | "capitalize" | "inherit";
   color: string;
-  textAlign: "left" | "center" | "right" | "justify";
+  textAlign: "left" | "center" | "right" | "justify" | "inherit";
 }
 
 export interface FontControlsProps {
