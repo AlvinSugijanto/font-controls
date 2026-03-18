@@ -2,14 +2,16 @@ import React from "react";
 import { ControlChangeHandler } from "../../types";
 
 interface LetterSpacingControlProps {
-  value: number;
-  onChange: ControlChangeHandler<number>;
+  value: number | "inherit";
+  onChange: ControlChangeHandler<number | "inherit">;
 }
 
 export const LetterSpacingControl: React.FC<LetterSpacingControlProps> = ({
   value,
   onChange,
 }) => {
+  const numericValue = value === "inherit" ? 0 : value;
+
   return (
     <div className="font-control-group">
       <label className="font-control-label">Letter Spacing</label>
@@ -20,17 +22,18 @@ export const LetterSpacingControl: React.FC<LetterSpacingControlProps> = ({
           min={-5}
           max={10}
           step={0.1}
-          value={value}
+          value={numericValue}
           onChange={(e) => onChange(Number(e.target.value))}
         />
         <input
-          type="number"
+          type="text"
           className="font-control-input font-control-number"
-          min={-5}
-          max={10}
-          step={0.1}
           value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (val === "inherit") onChange("inherit");
+            else onChange(Number(val));
+          }}
         />
       </div>
     </div>

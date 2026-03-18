@@ -131,14 +131,14 @@ const DEFAULT_FONT_FAMILIES = [
 ];
 
 const DEFAULT_CONFIG: FontConfig = {
-  fontFamily: "Arial",
-  fontSize: 16,
-  fontWeight: 400,
-  lineHeight: 1.5,
-  letterSpacing: 0,
-  textTransform: "none",
-  color: "#000000",
-  textAlign: "left",
+  fontFamily: "inherit",
+  fontSize: "inherit",
+  fontWeight: "inherit",
+  lineHeight: "inherit",
+  letterSpacing: "inherit",
+  textTransform: "inherit",
+  color: "inherit",
+  textAlign: "inherit",
 };
 
 export const FontControls: React.FC<FontControlsProps> = ({
@@ -185,7 +185,7 @@ export const FontControls: React.FC<FontControlsProps> = ({
       <SearchableFontSelect
         value={config.fontFamily}
         onChange={(value) => updateConfig("fontFamily", value)}
-        fontFamilies={fontFamilies}
+        fontFamilies={["inherit", ...fontFamilies]}
       />
 
       <FontSizeControl

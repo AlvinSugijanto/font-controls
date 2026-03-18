@@ -24,7 +24,7 @@ function App() {
           <h1
             style={{
               fontSize: "48px",
-              fontWeight: 700,
+              fontWeight: 500,
               color: "hsl(0, 0%, 3.9%)",
               marginBottom: "20px",
             }}
