@@ -37,7 +37,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 320px;
+  width: 360px;
   background: var(--fc-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -137,17 +137,40 @@
 
 .font-control-group {
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 8px;
 }
 
 .font-control-label {
+  min-width: 80px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--fc-text-secondary);
+  color: var(--fc-accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
+.font-control-message-error{
+  font-size : 12px;
+
+  color: var(--fc-text-secondary);
+}
+
+.font-control-variants-button {
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--fc-input-border);
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  letter-spacing: 1.1px;
+}
+
 
 .font-control-input {
   width: 100%;
@@ -273,60 +296,73 @@
 }
 
 
-.font-control-slider-container {
+/* Stepper Control (−/input/+) */
+.font-control-stepper {
   display: flex;
-  gap: 12px;
   align-items: center;
+  gap: 0;
+  border: 1px solid var(--fc-input-border);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.font-control-slider {
-  flex: 1;
-  height: 6px;
-  background: var(--fc-border);
-  border-radius: 3px;
-  outline: none;
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer;
-}
-
-.font-control-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background: var(--fc-accent);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.font-control-slider::-webkit-slider-thumb:hover {
-  background: var(--fc-accent-hover);
-  transform: scale(1.1);
-}
-
-.font-control-slider::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  background: var(--fc-accent);
-  border-radius: 50%;
-  cursor: pointer;
+.font-control-stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--fc-input-bg);
   border: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--fc-text);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+  font-family: inherit;
 }
 
-.font-control-slider::-moz-range-thumb:hover {
-  background: var(--fc-accent-hover);
-  transform: scale(1.1);
+.font-control-stepper-btn:hover {
+  background: var(--fc-bg-hover);
+  color: var(--fc-accent);
 }
 
-.font-control-number {
-  width: 70px;
+.font-control-stepper-btn:active {
+  background: var(--fc-accent);
+  color: hsl(0, 0%, 98%);
+}
+
+.font-control-stepper-input {
+  flex: 1;
   text-align: center;
-  padding: 6px 8px;
+  font-size: 13px;
+  border: none !important;
+  border-left: 1px solid var(--fc-input-border) !important;
+  border-right: 1px solid var(--fc-input-border) !important;
+  border-radius: 0 !important;
+  padding: 8px 4px;
+  min-width: 0;
+}
+
+.font-control-stepper-input:focus {
+  box-shadow: none !important;
+}
+
+/* Error States */
+.font-control-error {
+  border-color: hsl(0, 72%, 51%) !important;
+}
+
+.font-control-stepper:has(.font-control-error) {
+  border-color: hsl(0, 72%, 51%);
+}
+
+.font-control-message-error {
+  font-size: 12px;
+  color: hsl(0, 72%, 51%);
+  margin: 4px 0 0 0;
+  line-height: 1.3;
 }
 
 .font-control-color-input {
@@ -401,10 +437,15 @@
   height: 16px;
 }
 
-/* Reset Button */
-.font-control-reset-button {
-  width: 100%;
-  padding: 10px 16px;
+/* Reset Button in Header */
+.font-controls-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.font-control-reset-button-header {
+  padding: 6px 10px;
   background: var(--fc-input-bg);
   border: 1px solid var(--fc-input-border);
   border-radius: 6px;
@@ -414,14 +455,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-size: 13px;
+  gap: 6px;
+  font-size: 12px;
   font-weight: 500;
   font-family: inherit;
-  margin-top: 8px;
 }
 
-.font-control-reset-button:hover {
+.font-control-reset-button-header:hover {
   background: var(--fc-accent);
   border-color: var(--fc-accent);
   color: hsl(0, 0%, 98%);
@@ -429,13 +469,13 @@
   box-shadow: 0 4px 12px hsla(0, 0%, 9%, 0.3);
 }
 
-.font-control-reset-button:active {
+.font-control-reset-button-header:active {
   transform: translateY(0);
 }
 
-.font-control-reset-button svg {
-  width: 16px;
-  height: 16px;
+.font-control-reset-button-header svg {
+  width: 14px;
+  height: 14px;
 }
 
 /* Export Section */

@@ -28,15 +28,18 @@ export function generateGoogleFontsImport(fontFamily: string): string {
  * Generate React/JSX inline styles
  */
 export function generateReactStyles(config: FontConfig): string {
+  const lines: string[] = [];
+  if (config.fontFamily !== "inherit") lines.push(`  fontFamily: '${config.fontFamily}'`);
+  if (config.fontSize !== "inherit") lines.push(`  fontSize: '${config.fontSize}px'`);
+  if (config.fontWeight !== "inherit") lines.push(`  fontWeight: ${config.fontWeight}`);
+  if (config.lineHeight !== "inherit") lines.push(`  lineHeight: ${config.lineHeight}`);
+  if (config.letterSpacing !== "inherit") lines.push(`  letterSpacing: '${config.letterSpacing}px'`);
+  if (config.textTransform !== "inherit") lines.push(`  textTransform: '${config.textTransform}'`);
+  if (config.color !== "inherit") lines.push(`  color: '${config.color}'`);
+  if (config.textAlign !== "inherit") lines.push(`  textAlign: '${config.textAlign}'`);
+
   return `<h1 style={{
-  fontFamily: '${config.fontFamily}',
-  fontSize: '${config.fontSize}px',
-  fontWeight: ${config.fontWeight},
-  lineHeight: ${config.lineHeight},
-  letterSpacing: '${config.letterSpacing}px',
-  textTransform: '${config.textTransform}',
-  color: '${config.color}',
-  textAlign: '${config.textAlign}'
+${lines.join(",\n")}
 }}>
   Your Text Here
 </h1>`;
@@ -46,28 +49,18 @@ export function generateReactStyles(config: FontConfig): string {
  * Generate CSS class
  */
 export function generateCSSClass(config: FontConfig): string {
+  const lines: string[] = [];
+  if (config.fontFamily !== "inherit") lines.push(`  font-family: '${config.fontFamily}', sans-serif;`);
+  if (config.fontSize !== "inherit") lines.push(`  font-size: ${config.fontSize}px;`);
+  if (config.fontWeight !== "inherit") lines.push(`  font-weight: ${config.fontWeight};`);
+  if (config.lineHeight !== "inherit") lines.push(`  line-height: ${config.lineHeight};`);
+  if (config.letterSpacing !== "inherit") lines.push(`  letter-spacing: ${config.letterSpacing}px;`);
+  if (config.textTransform !== "inherit") lines.push(`  text-transform: ${config.textTransform};`);
+  if (config.color !== "inherit") lines.push(`  color: ${config.color};`);
+  if (config.textAlign !== "inherit") lines.push(`  text-align: ${config.textAlign};`);
+
   return `.my-text {
-  font-family: '${config.fontFamily}', sans-serif;
-  font-size: ${config.fontSize}px;
-  font-weight: ${config.fontWeight};
-  line-height: ${config.lineHeight};
-  letter-spacing: ${config.letterSpacing}px;
-  text-transform: ${config.textTransform};
-  color: ${config.color};
-  text-align: ${config.textAlign};
+${lines.join("\n")}
 }`;
 }
 
-/**
- * Generate plain CSS properties (for copy-paste)
- */
-export function generateCSSProperties(config: FontConfig): string {
-  return `font-family: '${config.fontFamily}', sans-serif;
-font-size: ${config.fontSize}px;
-font-weight: ${config.fontWeight};
-line-height: ${config.lineHeight};
-letter-spacing: ${config.letterSpacing}px;
-text-transform: ${config.textTransform};
-color: ${config.color};
-text-align: ${config.textAlign};`;
-}

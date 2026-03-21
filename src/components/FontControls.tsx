@@ -145,9 +145,6 @@ export const FontControls: React.FC<FontControlsProps> = ({
   value,
   onChange,
   fontFamilies = DEFAULT_FONT_FAMILIES,
-  minFontSize = 8,
-  maxFontSize = 120,
-  fontSizeStep = 1,
 }) => {
   const [config, setConfig] = useState<FontConfig>(() => {
     return { ...DEFAULT_CONFIG, ...value };
@@ -181,7 +178,33 @@ export const FontControls: React.FC<FontControlsProps> = ({
   };
 
   return (
-    <Panel title="Font Controls" draggable={true} position={{ x: 20, y: 20 }}>
+    <Panel
+      title="Font Controls"
+      draggable={true}
+      position={{ x: 20, y: 20 }}
+      headerActions={
+        <button
+          className="font-control-reset-button-header"
+          onClick={handleReset}
+          title="Reset to Default"
+          type="button"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="1 4 1 10 7 10" />
+            <polyline points="23 20 23 14 17 14" />
+            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
+          </svg>
+          Reset to Default
+        </button>
+      }
+    >
       <SearchableFontSelect
         value={config.fontFamily}
         onChange={(value) => updateConfig("fontFamily", value)}
@@ -191,9 +214,6 @@ export const FontControls: React.FC<FontControlsProps> = ({
       <FontSizeControl
         value={config.fontSize}
         onChange={(value) => updateConfig("fontSize", value)}
-        min={minFontSize}
-        max={maxFontSize}
-        step={fontSizeStep}
       />
 
       <FontWeightSelect
@@ -226,25 +246,6 @@ export const FontControls: React.FC<FontControlsProps> = ({
         onChange={(value) => updateConfig("textAlign", value)}
       />
 
-      <button
-        className="font-control-reset-button"
-        onClick={handleReset}
-        type="button"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="1 4 1 10 7 10" />
-          <polyline points="23 20 23 14 17 14" />
-          <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
-        </svg>
-        Reset to Default
-      </button>
 
       {/* Export Configuration Section */}
       <div className="font-control-export-section">

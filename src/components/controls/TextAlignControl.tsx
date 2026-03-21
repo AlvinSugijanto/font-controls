@@ -7,7 +7,7 @@ interface TextAlignControlProps {
 }
 
 const ALIGN_OPTIONS = [
-  { value: "inherit" as const, icon: "Inh" },
+  { value: "inherit" as const, icon: "—" },
   { value: "left" as const, icon: "⬅" },
   { value: "center" as const, icon: "↔" },
   { value: "right" as const, icon: "➡" },

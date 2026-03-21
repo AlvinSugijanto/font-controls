@@ -7,7 +7,7 @@ interface FontWeightSelectProps {
 }
 
 const FONT_WEIGHTS = [
-  { value: "inherit", label: "Inherit" },
+  { value: "inherit", label: "—" },
   { value: 100, label: "Thin" },
   { value: 200, label: "Extra Light" },
   { value: 300, label: "Light" },

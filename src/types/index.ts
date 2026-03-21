@@ -37,12 +37,6 @@ export interface FontControlsProps {
    * @default 120
    */
   maxFontSize?: number;
-
-  /**
-   * Font size step
-   * @default 1
-   */
-  fontSizeStep?: number;
 }
 
 export type ControlChangeHandler<T> = (value: T) => void;
