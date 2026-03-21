@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { FontControls, FontConfig, useFontControls } from "../src";
+import { FontControls, useFontControls } from "../src";
 
 function App() {
-  const { config, setConfig, updateConfig, resetConfig } = useFontControls();
+  const { config, setConfig } = useFontControls();
   return (
     <div
       style={{
@@ -50,7 +49,7 @@ function App() {
             border: "1px solid hsl(0, 0%, 89.8%)",
           }}
         >
-          <div style={{ ...config, color: config.color || "hsl(0, 0%, 3.9%)" }}>
+          <div style={config}>
             <h2
               style={{
                 marginBottom: "20px",

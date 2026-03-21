@@ -1,10 +1,6 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { FontConfig } from "../types";
-import {
-  loadFontConfig,
-  saveFontConfig,
-  clearFontConfig,
-} from "../utils/localStorage";
+import { getStyles } from "../utils/styleUtils";
 
 const DEFAULT_CONFIG: FontConfig = {
   fontFamily: "inherit",
@@ -22,66 +18,39 @@ export interface UseFontControlsOptions {
    * Initial font configuration
    */
   initialConfig?: Partial<FontConfig>;
-  /**
-   * Enable local storage persistence
-   * @default false
-   */
-  enableLocalStorage?: boolean;
-  /**
-   * Custom storage key for local storage
-   * @default "font-controls-config"
-   */
-  storageKey?: string;
 }
 
 /**
- * Custom hook for managing font configuration state with optional local storage persistence
+ * Custom hook for managing font configuration state
  * @param options - Configuration options
- * @returns Object with config state and control functions
+ * @returns Object with clean config styles and control functions
  */
 export const useFontControls = (options?: UseFontControlsOptions) => {
-  const {
-    initialConfig,
-    enableLocalStorage = true,
-    storageKey = "font-controls-config",
-  } = options || {};
+  const { initialConfig } = options || {};
 
-  // Initialize state with saved config from localStorage if enabled
-  const [config, setConfig] = useState<FontConfig>(() => {
-    if (enableLocalStorage) {
-      const savedConfig = loadFontConfig(storageKey);
-      if (savedConfig) {
-        return { ...DEFAULT_CONFIG, ...initialConfig, ...savedConfig };
-      }
-    }
-    return { ...DEFAULT_CONFIG, ...initialConfig };
-  });
+  const [rawConfig, setRawConfig] = useState<FontConfig>(() => ({
+    ...DEFAULT_CONFIG,
+    ...initialConfig,
+  }));
 
-  // Save to localStorage whenever config changes
-  useEffect(() => {
-    if (enableLocalStorage) {
-      saveFontConfig(config, storageKey);
-    }
-  }, [config, enableLocalStorage, storageKey]);
+  // Clean config with "inherit" values stripped out.
+  // Use directly with style={config} — won't override CSS classes.
+  const config = useMemo(() => getStyles(rawConfig), [rawConfig]);
 
   const resetConfig = () => {
-    const newConfig = { ...DEFAULT_CONFIG, ...initialConfig };
-    setConfig(newConfig);
-    if (enableLocalStorage) {
-      clearFontConfig(storageKey);
-    }
+    setRawConfig({ ...DEFAULT_CONFIG, ...initialConfig });
   };
 
   const updateConfig = <K extends keyof FontConfig>(
     key: K,
     value: FontConfig[K],
   ) => {
-    setConfig((prev) => ({ ...prev, [key]: value }));
+    setRawConfig((prev) => ({ ...prev, [key]: value }));
   };
 
   return {
     config,
-    setConfig,
+    setConfig: setRawConfig,
     updateConfig,
     resetConfig,
   };

@@ -129,7 +129,7 @@ export const SearchableFontSelect: React.FC<SearchableFontSelectProps> = ({
           ref={searchInputRef}
           type="text"
           className="font-control-input font-control-search-input"
-          value={isOpen ? searchTerm : value}
+          value={isOpen ? searchTerm : value === "inherit" ? "" : value}
           onChange={handleSearchChange}
           onClick={handleInputClick}
           onKeyDown={handleKeyDown}
@@ -148,9 +148,9 @@ export const SearchableFontSelect: React.FC<SearchableFontSelectProps> = ({
                   } ${font === value ? "selected" : ""}`}
                   onClick={() => handleSelect(font)}
                   onMouseEnter={() => setHighlightedIndex(index)}
-                  style={{ fontFamily: font }}
+                  style={{ fontFamily: font === "inherit" ? "inherit" : font }}
                 >
-                  {font}
+                  {font === "inherit" ? "—" : font}
                 </div>
               ))
             ) : (

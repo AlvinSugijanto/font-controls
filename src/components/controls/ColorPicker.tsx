@@ -28,8 +28,8 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         <input
           type="text"
           className="font-control-input font-control-text-input"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          value={value === "inherit" ? "" : value}
+          onChange={(e) => onChange(e.target.value || "inherit")}
           placeholder="#000000"
         />
       </div>

@@ -9,7 +9,7 @@ interface TextTransformSelectProps {
 }
 
 const TEXT_TRANSFORMS = [
-  { value: "inherit" as const, label: "Inherit" },
+  { value: "inherit" as const, label: "—" },
   { value: "none" as const, label: "None" },
   { value: "uppercase" as const, label: "UPPERCASE" },
   { value: "lowercase" as const, label: "lowercase" },
