@@ -36,7 +36,9 @@ export const LetterSpacingControl: React.FC<LetterSpacingControlProps> = ({
     const timeout = setTimeout(() => {
       if (inputValue === "") {
         setError(null);
-        onChange("inherit");
+        if (value !== "inherit") {
+          onChange("inherit");
+        }
         return;
       }
 

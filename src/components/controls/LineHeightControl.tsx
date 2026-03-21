@@ -36,7 +36,9 @@ export const LineHeightControl: React.FC<LineHeightControlProps> = ({
     const timeout = setTimeout(() => {
       if (inputValue === "") {
         setError(null);
-        onChange("inherit");
+        if (value !== "inherit") {
+          onChange("inherit");
+        }
         return;
       }
 
